@@ -1,0 +1,2 @@
+# Archivos que ignorará git al momento de hacer commit
+__pycache__/
