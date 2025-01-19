@@ -4,20 +4,26 @@ from rama import Rama
 class Repositorio:
     def __init__(self,):
         self.rama = None
-        self.staged = None
+        self.staged = lista = [Archivo("texto1.txt","1234567890"),Archivo("texto2.txt","qwertyuiop"),Archivo("texto3.txt","asdfghjkl"),Archivo("texto4.txt","zxcvbnm,"),Archivo("texto4.txt","zsefcbhjuik,")]
         self.commit_anterior = None
         self.ram = [Rama("master")]
         self.ram_actual = self.ram[0]
+        self.historial = [[None, None, None]] # [[hash del commit, nombre de la rama, comentario del commit,]]
 
     
     def hacer_commit(self, comentario:str):
         com = Commit(comentario, self.staged, self.commit_anterior)
         self.ram_actual.nuevo_commit(com)
+        aux = [com.hash,self.ram_actual.nombre,com.cometario]
+        if self.historial[0][0] is None:
+            self.historial[0] = aux
+        else:
+            self.historial.append(aux)
         print("Se ha creado el commit",com.hash,"en la rama",self.ram_actual.nombre)
         self.commit_anterior = com
 
     def crear_rama(self, nombre:str):
-        nueva_rama = Rama(nombre, self.ram.ultimo_commit)
+        nueva_rama = Rama(nombre, self.ram[0].ultimo_commit)
         self.ram.append(nueva_rama)
         print("La rama",nombre,"se ha creado exitosamente")
     
@@ -47,6 +53,11 @@ class Repositorio:
                 print("El Merge entre",self.ram_actual.nombre,"y",self.ram[pos].nombre,"se ha realizado exitosamente")
             else:
                 print("No existe alguna rama con el nombre:",nombre_rama)
+    
+    def mostrar_historial(self):
+        for comm in reversed(self.historial):
+            print("*",comm[0],"(",comm[1],") ",comm[2])
+
 
 
 

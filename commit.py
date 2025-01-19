@@ -15,17 +15,6 @@ class Commit:
         for k in range(12):
             hash += letras[random.randint(0,len(letras)-1)]
         return hash
-    
-    def mostrar(self):
-        print("Hash del commit: "+self.hash)
-        print(self.cometario)
-        print("archivos: ", end="")
-        for archivo in self.archivos:
-            print(archivo.nombre + "\t",end=" ")
-        if self.anterior is None:
-            print("\nCommit Inicial.")
-        else:
-            print("\nCommit anterior:",self.anterior.hash)
 
 lista = [Archivo("texto1.txt","1234567890"),Archivo("texto2.txt","qwertyuiop"),Archivo("texto3.txt","asdfghjkl"),Archivo("texto4.txt","zxcvbnm,"),Archivo("texto4.txt","zsefcbhjuik,")]
 c1 = Commit("Primer Commit",lista,None)
