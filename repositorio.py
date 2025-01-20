@@ -4,7 +4,7 @@ from rama import Rama
 class Repositorio:
     def __init__(self,):
         self.rama = None
-        self.staged = lista = [Archivo("texto1.txt","1234567890"),Archivo("texto2.txt","qwertyuiop"),Archivo("texto3.txt","asdfghjkl"),Archivo("texto4.txt","zxcvbnm,"),Archivo("texto4.txt","zsefcbhjuik,")]
+        self.staged = [None]
         self.commit_anterior = None
         self.ram = [Rama("master")]
         self.ram_actual = self.ram[0]
@@ -49,12 +49,18 @@ class Repositorio:
                     pos=k
                     break
             if pos!=-1:
+                nuevo_commit = Commit("Merge entre "+ self.ram_actual.nombre + " y " + self.ram[pos].nombre,self.staged,self.ram_actual.ultimo_commit)
+                print("Se ha creado el commit",nuevo_commit.hash,"en la rama",self.ram_actual.nombre)
+                aux = [nuevo_commit.hash,self.ram_actual.nombre,nuevo_commit.cometario]
+                self.historial.append(aux)
                 self.ram_actual.ultimo_commit = self.ram[pos].ultimo_commit
                 print("El Merge entre",self.ram_actual.nombre,"y",self.ram[pos].nombre,"se ha realizado exitosamente")
             else:
                 print("No existe alguna rama con el nombre:",nombre_rama)
     
     def mostrar_historial(self):
+        print("Historial de commits:")
+        print("* ____Hash____  (Rama) comentario")
         for comm in reversed(self.historial):
             print("*",comm[0],"(",comm[1],") ",comm[2])
 
