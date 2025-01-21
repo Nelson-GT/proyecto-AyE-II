@@ -4,15 +4,15 @@ from rama import Rama
 class Repositorio:
     def __init__(self,):
         self.rama = None
-        self.staged = [None]
         self.commit_anterior = None
         self.ram = [Rama("master")]
+        print("La rama master se ha creado exitosamente")
         self.ram_actual = self.ram[0]
         self.historial = [[None, None, None]] # [[hash del commit, nombre de la rama, comentario del commit,]]
 
     
     def hacer_commit(self, comentario:str):
-        com = Commit(comentario, self.staged, self.commit_anterior)
+        com = Commit(comentario, self.ram_actual.staged, self.commit_anterior)
         self.ram_actual.nuevo_commit(com)
         aux = [com.hash,self.ram_actual.nombre,com.cometario]
         if self.historial[0][0] is None:
@@ -49,11 +49,12 @@ class Repositorio:
                     pos=k
                     break
             if pos!=-1:
-                nuevo_commit = Commit("Merge entre "+ self.ram_actual.nombre + " y " + self.ram[pos].nombre,self.staged,self.ram_actual.ultimo_commit)
+                nuevo_commit = Commit("Merge entre "+ self.ram_actual.nombre + " y " + self.ram[pos].nombre,self.ram_actual.staged,self.ram_actual.ultimo_commit)
                 print("Se ha creado el commit",nuevo_commit.hash,"en la rama",self.ram_actual.nombre)
                 aux = [nuevo_commit.hash,self.ram_actual.nombre,nuevo_commit.cometario]
                 self.historial.append(aux)
                 self.ram_actual.ultimo_commit = self.ram[pos].ultimo_commit
+                self.ram_actual.staged = self.ram[pos].staged
                 print("El Merge entre",self.ram_actual.nombre,"y",self.ram[pos].nombre,"se ha realizado exitosamente")
             else:
                 print("No existe alguna rama con el nombre:",nombre_rama)
@@ -63,7 +64,3 @@ class Repositorio:
         print("* ____Hash____  (Rama) comentario")
         for comm in reversed(self.historial):
             print("*",comm[0],"(",comm[1],") ",comm[2])
-
-
-
-

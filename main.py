@@ -15,11 +15,11 @@ def menu():
         nombre = input("Escriba el nombre del archivo: ")
         contenido = input("Escriba el contenido del archivo:\n")
         arch = Archivo(nombre, contenido)
-        if repo.staged[0] is None:
-            repo.staged[0] = arch
+        if repo.ram_actual.staged[0] is None:
+            repo.ram_actual.staged[0] = arch
             print("Archivo subido exitosamente.")
         else:
-            repo.staged.append(arch)
+            repo.ram_actual.staged.append(arch)
             print("Archivo subido exitosamente.")
         return True
     elif eleccion=="2":
@@ -43,6 +43,9 @@ def menu():
         return True
     elif eleccion=="7":
         return False
+    else:
+        print("Opción invalida, vuelva a escribir su elección.")
+        return True
 
 iniciar=""
 while iniciar!="init":

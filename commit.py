@@ -15,6 +15,3 @@ class Commit:
         for k in range(12):
             hash += letras[random.randint(0,len(letras)-1)]
         return hash
-
-lista = [Archivo("texto1.txt","1234567890"),Archivo("texto2.txt","qwertyuiop"),Archivo("texto3.txt","asdfghjkl"),Archivo("texto4.txt","zxcvbnm,"),Archivo("texto4.txt","zsefcbhjuik,")]
-c1 = Commit("Primer Commit",lista,None)
